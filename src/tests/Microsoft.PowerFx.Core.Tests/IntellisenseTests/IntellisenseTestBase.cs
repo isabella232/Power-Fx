@@ -48,7 +48,7 @@ namespace Microsoft.PowerFx.Tests.IntellisenseTests
 
             var cursorMatches = Regex.Matches(expression, @"\|");
             Assert.True(cursorMatches.Count == 1, "Invalid cursor.  Exactly one cursor must be specified.");
-            var cursorPosition = cursorMatches.First().Index;
+            var cursorPosition = cursorMatches[0].Index;
 
             expression = expression.Replace("|", string.Empty);
 

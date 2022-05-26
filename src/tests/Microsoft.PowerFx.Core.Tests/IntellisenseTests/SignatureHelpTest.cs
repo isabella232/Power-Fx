@@ -20,9 +20,9 @@ namespace Microsoft.PowerFx.Tests.IntellisenseTests
         /// instead include the subpath bin/(Debug|Release).AnyCPU, depending on whether the assembly was
         /// built in debug or release mode.
         /// </summary>
-        private static readonly string _signatureHelpDirectory = Path.Join(Directory.GetCurrentDirectory(), "IntellisenseTests", "TestSignatures")
-            .Replace(Path.Join("bin", "Debug.AnyCPU"), "src")
-            .Replace(Path.Join("bin", "Release.AnyCPU"), "src");
+        private static readonly string _signatureHelpDirectory = Path.Combine(Directory.GetCurrentDirectory(), "IntellisenseTests", "TestSignatures")
+            .Replace(Path.Combine("bin", "Debug.AnyCPU"), "src")
+            .Replace(Path.Combine("bin", "Release.AnyCPU"), "src");
 
         /// <summary>
         /// Reads the current signature help test, located in the TestSignatures directory, deserializes and
@@ -35,7 +35,7 @@ namespace Microsoft.PowerFx.Tests.IntellisenseTests
         private void CheckSignatureHelpTest(SignatureHelp signatureHelp, int helpId)
         {
             var directory = _signatureHelpDirectory;
-            var signatureHelpPath = Path.Join(_signatureHelpDirectory, helpId + ".json");
+            var signatureHelpPath = Path.Combine(_signatureHelpDirectory, helpId + ".json");
 
             if (File.Exists(signatureHelpPath))
             {

@@ -232,7 +232,7 @@ namespace Microsoft.PowerFx.Core.Tests
                         return (TestResult.Pass, null);
                     }
 
-                    var expectedErrorKinds = expectedErrorKind.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
+                    var expectedErrorKinds = expectedErrorKind.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
 
                     if (errorResult.Errors.Count != expectedErrorKinds.Count())
                     {

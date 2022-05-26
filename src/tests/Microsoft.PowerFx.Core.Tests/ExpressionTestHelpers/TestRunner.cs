@@ -44,7 +44,7 @@ namespace Microsoft.PowerFx.Core.Tests
 
         public void AddDir(string directory = "")
         {
-            directory = Path.GetFullPath(directory, TestRoot);
+            directory = Path.Combine(TestRoot, directory);
             var allFiles = Directory.EnumerateFiles(directory);
 
             AddFile(allFiles);
@@ -84,7 +84,7 @@ namespace Microsoft.PowerFx.Core.Tests
 
         public void AddFile(string thisFile)
         {
-            thisFile = Path.GetFullPath(thisFile, TestRoot);
+            thisFile = Path.Combine(TestRoot, thisFile);
 
             var lines = File.ReadAllLines(thisFile);
 

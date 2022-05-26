@@ -421,9 +421,9 @@ namespace Microsoft.PowerFx.Core.Tests
 
             var test = new TestCase
             {
-                SetupHandlerName = handlerName
+                SetupHandlerName = handlerName,
+                Expected = "1"
             };
-            test.Expected = "1";
             var result = await runner.RunAsync(test);
 
             Assert.Equal(TestResult.Skip, result.Item1);
@@ -512,7 +512,7 @@ namespace Microsoft.PowerFx.Core.Tests
 
         private static void AddFile(TestRunner runner, string filename)
         {
-            var test1 = Path.GetFullPath(filename, TxtFileDataAttribute.GetDefaultTestDir("TestRunnerTests"));
+            var test1 = Path.Combine(TxtFileDataAttribute.GetDefaultTestDir("TestRunnerTests"), filename);
             runner.AddFile(test1);
         }
     }
