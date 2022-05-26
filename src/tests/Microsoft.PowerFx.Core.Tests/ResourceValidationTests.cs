@@ -13,19 +13,19 @@ using Xunit;
 namespace Microsoft.PowerFx.Tests
 {
     public class ResourceValidationTests : PowerFxTest
-    {       
+    {
         [Fact]
         public void ResourceLoadsOnlyRequiredLocales()
         {
             // Get a string from En-Us to ensure it's loaded
             Assert.NotNull(StringResources.Get("AboutIf", "en-US"));
 
-            var loaded = string.Empty;
+            var loadedDe = false;
             var loadedCount = 0;
 
             void ResourceAssemblyLoadHandler(object sender, AssemblyLoadEventArgs args)
             {
-                loaded = args.LoadedAssembly.FullName;
+                loadedDe |= args.LoadedAssembly.FullName.Contains("de-DE");
                 loadedCount++;
             }
 
@@ -35,14 +35,17 @@ namespace Microsoft.PowerFx.Tests
 
                 // Fallback locale (en-US) is already loaded above
                 var generalError = StringResources.Get("ErrGeneralError");
-                Assert.Empty(loaded);
+                Assert.False(loadedDe);
+                Assert.Equal(0, loadedCount);
 
                 // Other locales force a new assembly load
                 generalError = StringResources.Get("ErrGeneralError", "de-DE");
-                Assert.Contains("de-DE", loaded);
+                Assert.True(loadedDe);
 
+#if !NET462
                 // No other assemblies were loaded
                 Assert.Equal(1, loadedCount);
+#endif
             }
             finally 
             {
@@ -57,11 +60,11 @@ namespace Microsoft.PowerFx.Tests
             var enUsERContent = StringResources.GetErrorResource(TexlStrings.ErrBadToken);
             var enUsBasicContent = StringResources.Get("AboutAbs");
 
-            var loaded = string.Empty;
+            var loadedFr = false;
             var loadedCount = 0;
             void ResourceAssemblyLoadHandler(object sender, AssemblyLoadEventArgs args)
             {
-                loaded = args.LoadedAssembly.FullName;
+                loadedFr |= args.LoadedAssembly.FullName.Contains("fr-FR");
                 loadedCount++;
             }
 
@@ -72,10 +75,12 @@ namespace Microsoft.PowerFx.Tests
 
                 var frERContent = StringResources.GetErrorResource(TexlStrings.ErrBadToken);
                 var frBasicContent = StringResources.Get("AboutAbs");
-                Assert.Contains("fr-FR", loaded);
+                Assert.True(loadedFr);
 
+#if !NET462
                 // No other assemblies were loaded
                 Assert.Equal(1, loadedCount);
+#endif
 
                 // Strings are not the same as enUS
                 // Not validating content directly, since it might change
