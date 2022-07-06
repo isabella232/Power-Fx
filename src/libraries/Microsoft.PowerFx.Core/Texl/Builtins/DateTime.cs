@@ -693,7 +693,7 @@ namespace Microsoft.PowerFx.Core.Texl.Builtins
     {
         public override bool HasPreciseErrors => true;
 
-        public override bool SupportsParamCoercion => true;
+        public override bool SupportsParamCoercion => false;
 
         public override bool IsSelfContained => true;
 
@@ -718,7 +718,7 @@ namespace Microsoft.PowerFx.Core.Texl.Builtins
     {
         public override bool HasPreciseErrors => true;
 
-        public override bool SupportsParamCoercion => true;
+        public override bool SupportsParamCoercion => false;
 
         public override bool IsSelfContained => true;
 
